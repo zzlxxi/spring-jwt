@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.w2site.springjwt.annotation.PassToken;
-import com.w2site.springjwt.annotation.UserloginToken;
+import com.w2site.springjwt.annotation.UserLoginToken;
 import com.w2site.springjwt.domain.User;
 import com.w2site.springjwt.service.UserService;
 import java.lang.reflect.Method;
@@ -36,8 +36,8 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         return true;
       }
     }
-    if (method.isAnnotationPresent(UserloginToken.class)) {
-      UserloginToken userloginToken = method.getAnnotation(UserloginToken.class);
+    if (method.isAnnotationPresent(UserLoginToken.class)) {
+      UserLoginToken userloginToken = method.getAnnotation(UserLoginToken.class);
       if (userloginToken.required()) {
         // 执行认证
         if (token == null) {
