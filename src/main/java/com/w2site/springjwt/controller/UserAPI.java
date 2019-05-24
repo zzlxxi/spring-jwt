@@ -18,10 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api")
 public class UserAPI {
 
-  @Autowired
-  private UserService userService;
-  @Autowired
-  private TokenService tokenService;
+  @Autowired private UserService userService;
+  @Autowired private TokenService tokenService;
 
   @PostMapping("/login")
   public Object login(@RequestBody User user) {

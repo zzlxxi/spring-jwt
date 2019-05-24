@@ -17,22 +17,17 @@ import org.springframework.web.servlet.ModelAndView;
 
 public class AuthenticationInterceptor implements HandlerInterceptor {
 
-  @Autowired
-  private UserService userService;
+  @Autowired private UserService userService;
 
   @Override
-  public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
-      Object handler) {
+  public boolean preHandle(
+      HttpServletRequest request, HttpServletResponse response, Object handler) {
     String token = request.getHeader("token");
-    /**
-     * 如果不是方法映射到的方法直接通过
-     */
+    /** 如果不是方法映射到的方法直接通过 */
     if (!(handler instanceof HandlerMethod)) {
       return true;
     }
-    /**
-     * 检查是否有passtoken注解
-     */
+    /** 检查是否有passtoken注解 */
     HandlerMethod handlerMethod = (HandlerMethod) handler;
     Method method = handlerMethod.getMethod();
     if (method.isAnnotationPresent(PassToken.class)) {
@@ -44,7 +39,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     if (method.isAnnotationPresent(UserloginToken.class)) {
       UserloginToken userloginToken = method.getAnnotation(UserloginToken.class);
       if (userloginToken.required()) {
-        //执行认证
+        // 执行认证
         if (token == null) {
           throw new RuntimeException("无token，请重新登录");
         }
@@ -61,14 +56,15 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
   }
 
   @Override
-  public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-      ModelAndView modelAndView) throws Exception {
-
-  }
+  public void postHandle(
+      HttpServletRequest request,
+      HttpServletResponse response,
+      Object handler,
+      ModelAndView modelAndView)
+      throws Exception {}
 
   @Override
-  public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
-      Object handler, Exception ex) throws Exception {
-
-  }
+  public void afterCompletion(
+      HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
+      throws Exception {}
 }
